@@ -1,7 +1,7 @@
 package retcalc
 
 import org.scalactic.{Equality, TolerantNumerics, TypeCheckedTripleEquals}
-import org.scalatest.{WordSpec, Matchers}
+import org.scalatest.{Matchers, WordSpec}
 
 class RetCalcSpec extends WordSpec with Matchers with TypeCheckedTripleEquals {
   implicit val doubleEquality: Equality[Double] = TolerantNumerics.tolerantDoubleEquality(0.0001)
@@ -23,7 +23,7 @@ class RetCalcSpec extends WordSpec with Matchers with TypeCheckedTripleEquals {
     "calculate how much savings will be left after having taken a pension" +
       "for n months" in {
       val actual = RetCalc.futureCapital(
-        interestRate = 0.04/12, nbOfMonths = 40 * 12,
+        interestRate = 0.04 / 12, nbOfMonths = 40 * 12,
         netIncome = 0, currentExpenses = 2000,
         initialCapital = 541267.1990
       )
@@ -36,7 +36,7 @@ class RetCalcSpec extends WordSpec with Matchers with TypeCheckedTripleEquals {
   "RetCalc.simulatePlan" should {
     "calculate the capital at retirement and the capital after death" in {
       val (capitalAtRetirement, capitalAfterDeath) = RetCalc.simulatePlan(
-        interestRate = 0.04/12,
+        interestRate = 0.04 / 12,
         nbOfMonthsSavings = 25 * 12,
         nbOfMonthsInRetirement = 40 * 12,
         netIncome = 3000,
@@ -51,8 +51,8 @@ class RetCalcSpec extends WordSpec with Matchers with TypeCheckedTripleEquals {
   "RectCalc.nbOfMonthsSaving" should {
     "calculate how long I need to save before I can retire" in {
       val actual = RetCalc.nbOfMonthsSaving(
-        interestRate=0.04/12,
-        nbOfMonthsRetirement = 40 * 12,
+        interestRate = 0.04 / 12,
+        nbOfMonthsInRetirement = 40 * 12,
         netIncome = 3000,
         currentExpenses = 2000,
         initialCapital = 10000
