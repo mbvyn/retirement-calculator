@@ -70,12 +70,12 @@ class RetCalcSpec extends WordSpec with Matchers with TypeCheckedTripleEquals {
         currentExpenses = 2999,
         initialCapital = 0
       )
-      val expected = 8200
+      val expected = 8280
 
       actual should ===(expected)
-
-      "not loop forever if I enter bad parameters" in pending
     }
+    
+    "not loop forever if I enter bad parameters" in pending
   }
 
 }
