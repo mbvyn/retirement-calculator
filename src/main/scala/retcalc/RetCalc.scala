@@ -20,8 +20,10 @@ object RetCalc {
         months
       else loop(months + 1)
     }
-
-    loop(0)
+    if (netIncome > currentExpenses)
+      loop(0)
+    else
+      Int.MaxValue
   }
 
   def simulatePlan(interestRate: Double,
