@@ -20,6 +20,7 @@ object RetCalc {
         months
       else loop(months + 1)
     }
+
     if (netIncome > currentExpenses)
       loop(0)
     else
@@ -51,12 +52,13 @@ object RetCalc {
     (capitalAtRetirement, capitalAfterDeath)
   }
 
-  def futureCapital(interestRate: Double, nbOfMonths: Int, netIncome: Int,
+  def futureCapital(returns: Returns, nbOfMonths: Int, netIncome: Int,
                     currentExpenses: Int, initialCapital: Double): Double = {
     val monthlySavings = netIncome - currentExpenses
 
-    (0 until nbOfMonths).foldLeft(initialCapital)(
-      (accumulated, _) => accumulated * (1 + interestRate) + monthlySavings
-    )
+    (0 until nbOfMonths).foldLeft(initialCapital) {
+      case (accumulated, month) =>
+        accumulated * (1 + Returns.monthlyRate(returns, month)) + monthlySavings
+    }
   }
 }
