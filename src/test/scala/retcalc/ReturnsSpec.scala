@@ -42,7 +42,7 @@ class ReturnsSpec extends WordSpec with Matchers with TypeCheckedTripleEquals {
       )
       val inflation = Vector(
         InflationData("2117.01", 100.0),
-        InflationData("2117.02", 101.0),
+        InflationData("2117.02", 102.0),
         InflationData("2117.03", 102.0),
       )
 
