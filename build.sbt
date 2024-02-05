@@ -6,5 +6,6 @@ lazy val root = (project in file("."))
   .settings(
     name := "retirement_calculator",
     libraryDependencies += "org.scalatest" %% "scalatest" % "3.0.4" % "test",
-    libraryDependencies += "org.scalactic" %% "scalactic" % "3.2.15" % "test"
+    libraryDependencies += "org.scalactic" %% "scalactic" % "3.2.15" % "test",
+    mainClass in Compile := Some("retcalc.SimulatePlanApp")
   )
