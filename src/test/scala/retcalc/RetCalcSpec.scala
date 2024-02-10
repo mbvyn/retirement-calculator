@@ -60,7 +60,7 @@ class RetCalcSpec extends WordSpec with Matchers with TypeCheckedTripleEquals {
     "calculate how long I need to save before I can retire" in {
       val actual = RetCalc.nbOfMonthsSaving(params, FixedReturns(0.04))
       val expected = 23 * 12 + 1
-      actual should ===(expected)
+      actual should ===(Some(expected))
     }
 
     "not crash if the resulting nbOfMonths is very high" in {
@@ -70,12 +70,12 @@ class RetCalcSpec extends WordSpec with Matchers with TypeCheckedTripleEquals {
           netIncome = 3000, currentExpenses = 2999, initialCapital = 0),
         returns = FixedReturns(0.01))
       val expected = 8280
-      actual should ===(expected)
+      actual should ===(Some(expected))
     }
 
     "not loop forever if I enter bad parameters" in {
       val actual = RetCalc.nbOfMonthsSaving(params.copy(netIncome = 1000), FixedReturns(0.04))
-      actual should ===(Int.MaxValue)
+      actual should ===(None)
     }
   }
 

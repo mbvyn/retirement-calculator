@@ -27,7 +27,7 @@ object RetCalc {
   }
 
 
-  def nbOfMonthsSaving(params: RetCalcParams, returns: Returns): Int = {
+  def nbOfMonthsSaving(params: RetCalcParams, returns: Returns): Option[Int] = {
     import params._
     @tailrec
     def loop(months: Int): Int = {
@@ -40,9 +40,9 @@ object RetCalc {
     }
 
     if (netIncome > currentExpenses)
-      loop(0)
+      Some(loop(0))
     else
-      Int.MaxValue
+      None
   }
 
   def futureCapital(returns: Returns, nbOfMonths: Int, netIncome: Int, currentExpenses: Int,
