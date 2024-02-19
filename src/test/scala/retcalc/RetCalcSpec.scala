@@ -10,14 +10,14 @@ class RetCalcSpec extends WordSpec with Matchers with TypeCheckedTripleEquals wi
     "calculate the amount of savings I will have in n months" in {
       // Excel =-FV(0.04/12,25*12,1000,10000,0)
       val actual = RetCalc.futureCapital(FixedReturns(0.04), nbOfMonths = 25 * 12,
-        netIncome = 3000, currentExpenses = 2000, initialCapital = 10000)
+        netIncome = 3000, currentExpenses = 2000, initialCapital = 10000).right.value
       val expected = 541267.1990
       actual should ===(expected)
     }
 
     "calculate how much savings will be left after having taken a pension for n months" in {
       val actual = RetCalc.futureCapital(FixedReturns(0.04), nbOfMonths = 40 * 12,
-        netIncome = 0, currentExpenses = 2000, initialCapital = 541267.198962)
+        netIncome = 0, currentExpenses = 2000, initialCapital = 541267.198962).right.value
       val expected = 309867.5316
       actual should ===(expected)
     }
@@ -32,7 +32,7 @@ class RetCalcSpec extends WordSpec with Matchers with TypeCheckedTripleEquals wi
   "RetCalc.simulatePlan" should {
     "calculate the capital at retirement and the capital after death" in {
       val (capitalAtRetirement, capitalAfterDeath) = RetCalc.simulatePlan(
-        returns = FixedReturns(0.04), params, nbOfMonthsSavings = 25 * 12)
+        returns = FixedReturns(0.04), params, nbOfMonthsSavings = 25 * 12).right.value
 
       capitalAtRetirement should ===(541267.1990)
       capitalAfterDeath should ===(309867.5316)
@@ -47,7 +47,7 @@ class RetCalcSpec extends WordSpec with Matchers with TypeCheckedTripleEquals wi
           else
             VariableReturn(i.toString, 0.03 / 12)))
       val (capitalAtRetirement, capitalAfterDeath) =
-        RetCalc.simulatePlan(returns, params, nbOfMonthsSavings)
+        RetCalc.simulatePlan(returns, params, nbOfMonthsSavings).right.value
       // Excel: =-FV(0.04/12, 25*12, 1000, 10000)
       capitalAtRetirement should ===(541267.1990)
       // Excel: =-FV(0.03/12, 40*12, -2000, 541267.20)
