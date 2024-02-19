@@ -1,5 +1,7 @@
 package retcalc
 
+import retcalc.RetCalcError.MoreExpensesThanIncome
+
 import scala.annotation.tailrec
 
 case class RetCalcParams(nbOfMonthsInRetirement: Int,
@@ -27,7 +29,7 @@ object RetCalc {
   }
 
 
-  def nbOfMonthsSaving(params: RetCalcParams, returns: Returns): Option[Int] = {
+  def nbOfMonthsSaving(params: RetCalcParams, returns: Returns): Either[RetCalcError, Int] = {
     import params._
     @tailrec
     def loop(months: Int): Int = {
@@ -40,9 +42,10 @@ object RetCalc {
     }
 
     if (netIncome > currentExpenses)
-      Some(loop(0))
+      Right(loop(0))
     else
-      None
+      Left(MoreExpensesThanIncome(netIncome, currentExpenses)
+      )
   }
 
   def futureCapital(returns: Returns, nbOfMonths: Int, netIncome: Int, currentExpenses: Int,
